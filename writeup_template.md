@@ -23,11 +23,7 @@ The goals / steps of this project are the following:
 [image6]: ./output_images/Not_car_ch_1.png
 [image7]: ./output_images/Not_car_ch_2.png
 
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
+
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -50,20 +46,32 @@ Read all the `vehicle` and `non-vehicle` images.  Here is an example of one of e
 
 ![alt text][image1]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+Explored different color spaced and used `YCrCb` color space and HOG parameters of `orientations=9`, `pixels_per_cell=8` and `cells_per_block=2`. Used CV2's hog method to extract HOG features for each channel. Following images represents the images from each channel and its corresponding HOG representation.
 
 
 ![alt text][image2]
+![alt text][image3]
+![alt text][image4]
+![alt text][image5]
+![alt text][image6]
+![alt text][image7]
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+I tried various combinations of color space from RGB, HLS, LUV, but finally settled on `YCrCb`as it provided the best results when used with the following
+
+orient = 9  # HOG orientations
+pix_per_cell = 8 # HOG pixels per cell
+cell_per_block = 2 # HOG cells per block
+hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
+spatial_size = (32,32) # Spatial binning dimensions
+hist_bins = 32    # Number of histogram bins
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+Extracted features using spatial binning, color histogram  and hog. Created a feature vector for every image and used Linear SVM to classify as cars vs not cars.
+
+This can be seen in 3rd code cell of the ipython notebook
 
 ###Sliding Window Search
 
