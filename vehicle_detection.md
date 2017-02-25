@@ -97,10 +97,10 @@ Initially, i was getting hog features for every sliding window, but this proved 
 
 Following are examples of pipeline images
 
-Detected Cars
+###Detected Cars
 ![alt text][image8]
 
-No cars found
+###No cars found
 ![alt text][image9]
 
 ---
