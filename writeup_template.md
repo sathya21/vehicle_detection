@@ -22,6 +22,15 @@ The goals / steps of this project are the following:
 [image5]: ./output_images/not_car_0.png
 [image6]: ./output_images/Not_car_ch_1.png
 [image7]: ./output_images/Not_car_ch_2.png
+[image8]: ./output_images/detect_car.png
+[image9]: ./output_images/detect_no_car.png
+[image10]: ./output_images/multiple_image_heatmap.png
+[image11]: ./output_images/image_boundary_label.png
+[image12]: ./output_images/detection_heatmap.png
+[video1]: ./final_video.mp4
+
+
+
 
 
 [video1]: ./project_video.mp4
@@ -61,10 +70,15 @@ Explored different color spaced and used `YCrCb` color space and HOG parameters 
 I tried various combinations of color space from RGB, HLS, LUV, but finally settled on `YCrCb`as it provided the best results when used with the following
 
 orient = 9  # HOG orientations
+
 pix_per_cell = 8 # HOG pixels per cell
+
 cell_per_block = 2 # HOG cells per block
+
 hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
+
 spatial_size = (32,32) # Spatial binning dimensions
+
 hist_bins = 32    # Number of histogram bins
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
@@ -77,39 +91,42 @@ This can be seen in 3rd code cell of the ipython notebook
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+First reduced the area to investigate lower by checking y between 400 to 656. Since we don't need to look at the top of the picture
+Then tried various scales from 1 to 2. Settled on 1.5 based on the performance
+Used step of 2 which will be aroudn 75% overlap with window size of 64. This was able to give maximum performance
 
-![alt text][image3]
+
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Initially, i was getting hog features for every sliding window, but this proved to be very slow. Each frame was taking about 20 seconds. Then extracted HOG features for the entire image and performed sliding window on that. This resulted in huge performance optimization, per second, it was doing about 2 frames.
 
-![alt text][image4]
+
+
+![alt text][image8]
+![alt text][image9]
+
 ---
 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./final_video.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+By just using sliding window technique for detecting a car, there are chances of False positives. Inorder to remove that, i have used heatmap technique to draw a heatmap and applying threshold of 1 so that only when multiple detections are made, that particular window will be selected. For finding the boundary of overlapping window, i used 'scipy.ndimage.measurements.label()' to label the image. Then, i got the bounding window and applied to the image. This can be found in 8th code cell.
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+### Image and Heatmap
 
-### Here are six frames and their corresponding heatmaps:
+![alt text][image10]
 
-![alt text][image5]
+### Here is the output of `scipy.ndimage.measurements.label()`
+![alt text][image11]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
+### Here the resulting bounding boxes after eliminating false positives and overlapping boundaries
+![alt text][image12]
 
 
 ---
