@@ -127,7 +127,7 @@ By just using sliding window technique for detecting a car, there are chances of
 
 ## Checking multiple frames
 
-I also implemented a way to check two frames to detect a car so that false positives can be eliminated. This can be found in 6th code cell
+### I also implemented a way to check two frames to detect a car so that false positives can be eliminated. This can be found in 6th code cell
 ---
 
 ###Discussion
