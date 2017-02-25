@@ -1,7 +1,4 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
----
 
 **Vehicle Detection Project**
 
@@ -41,9 +38,6 @@ The goals / steps of this project are the following:
 ---
 ###Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 
 ###Histogram of Oriented Gradients (HOG)
 
@@ -91,9 +85,9 @@ This can be seen in 3rd code cell of the ipython notebook
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-First reduced the area to investigate lower by checking y between 400 to 656. Since we don't need to look at the top of the picture
+First reduced the area to investigate lower by checking y between 400 to 656, Since we don't need to check at the top of the picture
 Then tried various scales from 1 to 2. Settled on 1.5 based on the performance
-Used step of 2 which will be aroudn 75% overlap with window size of 64. This was able to give maximum performance
+Used step of 2 which will be given 75% overlap with window size of 64. This was able to give maximum performance
 
 
 
@@ -132,6 +126,7 @@ By just using sliding window technique for detecting a car, there are chances of
 ![alt text][image12]
 
 ## Checking multiple frames
+
 I also implemented a way to check two frames to detect a car so that false positives can be eliminated. This can be found in 6th code cell
 ---
 
